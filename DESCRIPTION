@@ -1,0 +1,12 @@
+Package: RDN
+Type: Package
+Title: Package for the Calculation of the Reliability-Density Neighbourhood (RDN) Applicability Domain Technique for QSAR Classification Models
+Version: 0.1
+Author: Natalia L. Moura Aniceto
+Maintainer: Natalia L. Moura Aniceto <natalia.aniceto.22@gmail.com>
+Description: Calculation of the RDN applicability domain technique given any dataset populated with any number of molecular descriptors.
+License: GPL-2
+LazyData: TRUE
+RoxygenNote: 5.0.1
+Imports: randomForest
+Suggests: mlbench

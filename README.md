@@ -1,4 +1,4 @@
-# RDN (README UNDER CONSTRUCTION)
+# Reliability-Density Neighbourhood (RDN) Applicability Domain
 ## Description
 Reliability Density Neighbourhood is an Applicability Domain (AD) technique meant to estimate the reliability of the predictions from a QSAR (classification) model. This method scans the chemical space, starting from the locations of training instances, taking into account local density, and local bias and precision. After the chemical space has been mapped, the established RDN AD can be used to sort new (external) predictions according to their reliability. Even though the RDN mapping is calculated using `getRDN`, the different tasks that this entails are separately available through the remaining functions in the package, which are listed below. However, despite being available for use, functions should ideally not be called isolated, and the user should use `getRDN` directly instead.
 

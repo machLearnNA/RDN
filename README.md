@@ -10,7 +10,7 @@ Reliability Density Neighbourhood is an Applicability Domain (AD) technique mean
 
 **STEP 3**: Place new queries onto the established coverage map using `TestInTrain`. If an instance is located within the radius of coverage around any training instances, it will be deemed as covered by the AD.
 
-This workflow is fully automated in getRDN which runs these steps iteratively for a range of k values, which allows scanning chemical space from the near vicinity around training instances outwards. The full details on the theoretical background of this algorithm are available in the literature. (Aniceto et al. J Cheminf 2016. Submitted.)
+This workflow is fully automated in `getRDN` which runs these steps iteratively for a range of k values, which allows scanning chemical space from the near vicinity around training instances outwards. The full details on the theoretical background of this algorithm are available in the literature. (Aniceto et al. J Cheminf 2016. Submitted.)
 
 ## Calculating the RDN AD profile for a given QSAR Classification model
 The following example demonstrates how to use `getRDN` to obtain an AD profile for an example dataset (BreastCancer)

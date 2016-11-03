@@ -46,7 +46,7 @@ ensembleClass.t <- data.frame(bcdata$Class[trainID])
 ensembleProb.t <- data.frame(bcdata$Class[trainID])
 ```
 
-Then, an ensemble model should be created (ideally independently from the QSAR model). This will be used to obtain the bias an precision associated with each training compound. Note that **_only_** the training set is used for this, as the external test set will be later on placed onto the reliability-density training matrix across chemical space, built by `getRDN`.
+Then, an ensemble model should be created (ideally independently from the QSAR model). This will be used to obtain the bias (through `agreement`) an precision (through `std`) associated with each training compound. Note that **_only_** the training set is used for this, as the external test set will be later on placed onto the reliability-density training matrix across chemical space, built by `getRDN`.
 
 ```
 # train ensemble for AD calculation
@@ -63,22 +63,47 @@ ensembleClass.t[,i]=class_AD
 ensembleProb.t[,i]=P_AD
 }
 
-# compute agreement for TRAIN
+# compute agreement (which characterizes bias) for TRAIN
 agree <- data.frame(trainID)
 for (i in 1:length(trainID)){
   agree[i,2] <- sum(ensembleClass.t[i,-1]==toString(ensembleClass.t[i,1]))/10
 }
 
 agree <- data.frame(agree[,-1])
-#compute std for TRAIN
+#compute std (which characterizes precision) for TRAIN
 std <- apply(ensembleProb.t[,-1],1,sd)
 std <- data.frame(std)
+```
+
+Calculate the RDN by ranging the coverage span around each training instance. This will be done through a default of 65 iterations of increasing the coverage radii, however this can be customized. At each iteration test intances are places onto chemical space and whenever they are covered by at least one training neighbour, they will be deemed covered by the AD. The overall predictive accuracy of all covered instances at each iteration is registered (N _covered&correct_ /N _covered_).
+
+```
 # Prepare descriptors to be passed into getRDN
 train <- data.matrix(bcdata[trainID,1:ncol(bcdata)-1])
 test <- data.matrix(bcdata[-trainID,1:ncol(bcdata)-1])
+
 # Compute RDN; this will take care of scaling trainingSet and testSet internally before any use.
-resultSummary <- getRDN(performance=performance, trainingSet=train,
-testSet=test, agreementInput=agree, STDInput=std)
-# The results saved in resultSummary show a decreasing overall quality of predictions as
-# AD gets expanded (i.e. instances out of AD decrease).
+resultSummary <- getRDN(performance=performance, trainingSet=train, testSet=test, agreementInput=agree, STDInput=std)
+```
+The results saved in `resultSummary` show a decreasing overall quality of predictions as AD gets expanded (i.e. instances out of AD decrease).
+
+```
+   #NNout   ACC in AD
+#[1,] 108   0.9793814
+#[2,] 97    0.9722222
+#[3,] 92    0.9734513
+#[4,] 89    0.9741379
+#[5,] 88    0.9743590
+#[6,] 88    0.9743590
+        ...
+#[20,] 64   0.9645390
+#[21,] 64   0.9645390
+#[22,] 64   0.9645390
+#[23,] 64   0.9645390
+#[24,] 61   0.9652778
+#[25,] 60   0.9655172
+        ...
+#[36,] 12   0.9430052
+#[37,] 12   0.9430052
+#[38,] 12   0.9430052
 ```

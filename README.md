@@ -85,7 +85,7 @@ test <- data.matrix(bcdata[-trainID,1:ncol(bcdata)-1])
 # Compute RDN; this will take care of scaling trainingSet and testSet internally before any use.
 resultSummary <- getRDN(performance=performance, trainingSet=train, testSet=test, agreementInput=agree, STDInput=std)
 ```
-The results saved in `resultSummary` show a decreasing overall quality of predictions as AD gets expanded (i.e. instances out of AD decrease).
+The results saved in `resultSummary` show a decreasing overall quality of predictions as AD gets expanded (i.e. instances out of AD decrease). This variable saves the amount of test instances that are not covered at each interation (named "#NNout"), and the registered predictive accuracy inside the AD (named "ACC in AD")
 
 ```
    #NNout   ACC in AD

@@ -13,7 +13,7 @@ Reliability Density Neighbourhood is an Applicability Domain (AD) technique used
 This workflow is fully automated in `getRDN` which runs these steps iteratively for a range of k values, which allows scanning chemical space from the near vicinity around training instances outwards. The full details on the theoretical background of this algorithm are available in the literature. (Aniceto et al. J Cheminf 2016. Submitted.)
 
 ## Calculating the RDN AD profile for a given QSAR Classification model
-The following example demonstrates how to use `getRDN` to obtain an AD profile for an example dataset (BreastCancer)
+The following example demonstrates how to use `getRDN` to obtain an AD profile for an example dataset (`BreastCancer` dataset, available in the `mlbench` package)
 
 ### getRDN
 Before calculating the RDN mapping, the data needs to be prepared. The data to be passed to the function should only contain descriptors and the dependent variable (response), and an external set should be set aside.

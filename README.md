@@ -1,6 +1,6 @@
 # Reliability-Density Neighbourhood (RDN) Applicability Domain
 ## Description
-Reliability Density Neighbourhood is an Applicability Domain (AD) technique meant to estimate the reliability of the predictions from a QSAR (classification) model. This method scans the chemical space, starting from the locations of training instances, taking into account local density, and local bias and precision. After the chemical space has been mapped, the established RDN AD can be used to sort new (external) predictions according to their reliability. Even though the RDN mapping is calculated using `getRDN`, the different tasks that this entails are separately available through the remaining functions in the package, which are listed below. However, despite being available for use, functions should ideally not be called isolated, and the user should use `getRDN` directly instead.
+Reliability Density Neighbourhood is an Applicability Domain (AD) technique used in order to estimate the reliability of the predictions from a QSAR (classification) model. This method scans the chemical space, starting from the locations of training instances, taking into account local density, and local bias and precision. After the chemical space has been mapped, the established RDN AD can be used to sort new (external) predictions according to their reliability. Even though the RDN mapping is calculated using `getRDN`, the different tasks that this entails are separately available through the remaining functions in the package, which are listed below. However, despite being available for use, functions should ideally not be called isolated, and the user should use `getRDN` directly instead.
 
 `getRDN` is the automated implementation of the following workflow:
 
@@ -46,7 +46,7 @@ ensembleClass.t <- data.frame(bcdata$Class[trainID])
 ensembleProb.t <- data.frame(bcdata$Class[trainID])
 ```
 
-Then, an ensemble model should be created (ideally independently from the QSAR model). This will be used to obtain the bias (through `agreement`) an precision (through `std`) associated with each training compound. Note that **_only_** the training set is used for this, as the external test set will be later on placed onto the reliability-density training matrix across chemical space, built by `getRDN`.
+Then, an ensemble model should be created (ideally independently from the QSAR model). This will be used to obtain the bias (through `agreement`) and precision (through `std`) associated with each training compound. Note that **_only_** the training set is used for this, as the external test set (or any external compounds to be predicted) will be later on placed onto the reliability-density training matrix across chemical space, built by `getRDN`.
 
 ```
 # train ensemble for AD calculation
@@ -75,7 +75,7 @@ std <- apply(ensembleProb.t[,-1],1,sd)
 std <- data.frame(std)
 ```
 
-Calculate the RDN by ranging the coverage span around each training instance. This will be done through a default of 65 iterations of increasing the coverage radii, however this can be customized. At each iteration test intances are places onto chemical space and whenever they are covered by at least one training neighbour, they will be deemed covered by the AD. The overall predictive accuracy of all covered instances at each iteration is registered (N _covered&correct_ /N _covered_).
+Calculate the RDN by ranging the coverage span around each training instance. This will be done through a default of 65 iterations of increasing the coverage radii, however this can be customized. At each iteration, test instances are placed onto chemical space  and whenever they are covered by at least one training neighbour, they will be deemed covered by the AD. The overall predictive accuracy of all covered instances at each iteration is registered (N _covered&correct_ /N _covered_).
 
 ```
 # Prepare descriptors to be passed into getRDN

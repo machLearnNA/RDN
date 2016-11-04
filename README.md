@@ -31,11 +31,11 @@ bcdata <- bcdata[complete.cases(bcdata),]
 trainID <- sample(1:nrow(bcdata),round(nrow(bcdata)*0.7))
 ```
 
-Now the data will be used to build a QSAR model and gather the external predictions for using later when testing the RDN map.
+Now the data will be used to build a QSAR model and gather the external predictions for using them later when testing the RDN map.
 
 ```
 #QSAR model; gather external predictions
-# ntree was set to was purposefully to challenge the RDN calculation with more error.
+# ntree was purposefully set to 1 to challenge the RDN calculation with more error.
 m <- randomForest(Class~.,data=bcdata[c(trainID),], kepp.forest=TRUE, ntree=1, norm.votes=TRUE)
 p <- predict(m, bcdata[-trainID,], predict.all=TRUE, type="class")
 test_pred <- p$aggregate #class pred external
